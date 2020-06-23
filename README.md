@@ -1,2 +1,8 @@
-# machinelearning
+﻿# machinelearning
  机器学习实验+结课项目（语音性别识别）
+
+基于knn的minst手写体的识别
+
+基于朴素贝叶斯的垃圾邮件分类
+
+基于高斯贝叶斯的语音性别识别
