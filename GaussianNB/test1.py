@@ -104,26 +104,6 @@ def P_continuous(feature_Index, x, C, cP):
     ans = 1 / (math.sqrt(math.pi * 2) * std) * math.exp((-(x - mean) ** 2) / (2 * std * std)) #连续属性概率预测
     return ans
 
-def paintConfusion_float(lmr_matrix,classes):
-    plt.figure(figsize = (15, 10))
-    plt.imshow(lmr_matrix, interpolation='nearest', cmap=plt.cm.Blues)
-    plt.title('confusion matrix')
-    plt.colorbar()
-    tick_marks=np.arange(len(classes))
-    plt.xticks(tick_marks, classes, rotation = 90, size = 18)
-    plt.yticks(tick_marks, classes, size = 18)
-    plt.xlabel('Predict label', size = 20)
-    plt.ylabel('True label', size = 20)
-    lmr_matrix = lmr_matrix.astype('float') / lmr_matrix.sum(axis = 1)[:,np.newaxis]
-    fmt='.6f'
-    thresh = lmr_matrix.max() / 2.
-    for i, j in itertools.product(range(lmr_matrix.shape[0]), range(lmr_matrix.shape[1])):
-        plt.text(j, i, format(lmr_matrix[i, j], fmt),
-                     horizontalalignment = "center",
-                     color = "red" if lmr_matrix[i, j] > thresh else "black", size = 22)
-    plt.tight_layout()
-    plt.show()
-
 # 高斯贝叶斯过程
 def Bayes(test_data, train_tag, cP, times):
     # 求先验概率
@@ -161,7 +141,6 @@ if __name__ == '__main__':
         predict_label = Bayes(test_data, train_tag, continuousPara, times)  # 高斯贝叶斯过程
         confusionMatrix = confusion_matrix(test_tag, predict_label, labels=['male', 'female'])  # 得出混淆矩阵
         classes = ['male', 'female']
-        paintConfusion_float(confusionMatrix, classes)  # 绘制混淆矩阵，显示男女声的正确率与错误率
         print(classification_report(test_tag, predict_label))
         accuracy_male = confusionMatrix[0][0] / (len(test_tag) / 2)
         accuracy_female = confusionMatrix[1][1] / (len(test_tag) / 2)
